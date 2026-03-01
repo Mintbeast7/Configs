@@ -1,7 +1,12 @@
 server:
   port: 8098
+  error:
+    include-message: always
 
 spring:
+  application:
+    name: product-service
+
   datasource:
     url: jdbc:mysql://localhost:3306/commerce_product_db
     username: root
@@ -28,3 +33,11 @@ management:
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
